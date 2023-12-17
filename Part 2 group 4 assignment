@@ -1,0 +1,50 @@
+from google.colab import drive
+drive.mount('/content/drive')
+
+pip install slack_sdk
+
+import os
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
+
+# Replace 'your_oauth_token' with the OAuth token you obtained
+client = WebClient(token="xoxb-6346574638820-6376040300064-ZMoPxaxYGPs4KAxEpzCdJtrV")
+
+# Replace 'assignment' with your channel name
+channel = ''
+
+# Part 2: Post images from a folder
+image_folder = '/content/drive/MyDrive/group 4'
+images = [f for f in os.listdir(image_folder) if f.endswith(('.jpg', '.png', '.jpeg'))]
+
+for image in images:
+    try:
+        with open(os.path.join(image_folder, image), 'rb') as f:
+            response = client.files_upload(channels=channel, file=f, title=image)
+            print(f'Image {image} sent successfully:', response['ts'])
+    except SlackApiError as e:
+        print(f'Error posting image {image}:', e.response['error'])
+
+Error posting image group 4.png: not_in_channel
+Error posting image as 2 group 4.png: not_in_channel
+Error posting image as group 4.png: not_in_channel
+
+
+OR 
+
+slack_token = //
+
+folder_path = //
+
+channel_id = //
+
+try 
+  for filename in os.lisdir(folderpath):
+    file_path = os.path.join(folder_path, filename)
+
+    if os.path.isfile(file_path):
+    response = client.files_upload_v2(channels=channel_id, file=file_path, title=f"Uploaded: (filename), initial_comment="")
+    print(f"Uploaded (filename) successfully")
+
+    except SlackApiError as e:
+      print(f"Error uploading file: (e)")
